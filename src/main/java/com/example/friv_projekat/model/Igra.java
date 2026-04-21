@@ -2,133 +2,109 @@ package com.example.friv_projekat.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "igre")
 public class Igra {
-    @Entity
-    @Table(name = "users")
-    public class User {
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    private Long idIgre;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Column
+    private String imeIgre;
 
-        @Column(nullable = false)
-        private String ime;
+    @Column(columnDefinition = "TEXT")
+    private String opisIgre;
 
-        @Column(nullable = false)
-        private String prezime;
+    @Column
+    private String igraURL;
 
-        @Column(nullable = false, unique = true)
-        private String email;
+    private String thumbnailPutanja;
 
-        @Column(nullable = false)
-        private String sifra;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "Kategorija_id")
+    private Kategorija kategorija;
 
-        @Column(nullable = false)
-        private LocalDate datumRodjenja;
+    @Column(nullable = false)
+    private LocalDateTime datumDodavanja;
 
-        @Enumerated(EnumType.STRING)
-        @Column(nullable = false)
-        private Role role = Role.USER;
+    @Column(nullable = false)
+    private boolean aktivna = true;
 
-        private String profilnaSlikaPutanja;
+    public Igra() {}
 
-        @Column(nullable = false)
-        private LocalDateTime DatumRegistracije = LocalDateTime.now();
-
-        @Column(nullable = false)
-        private boolean blokiran = false;
-
-        public User() {
-        }
-
-        public User(String ime, String prezime, String email, String sifra, LocalDate datumRodjenja) {
-            this.ime = ime;
-            this.prezime = prezime;
-            this.email = email;
-            this.sifra = sifra;
-            this.datumRodjenja = datumRodjenja;
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public String getIme() {
-            return ime;
-        }
-
-        public void setIme(String ime) {
-            this.ime = ime;
-        }
-
-        public String getPrezime() {
-            return prezime;
-        }
-
-        public void setPrezime(String prezime) {
-            this.prezime = prezime;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getSifra() {
-            return sifra;
-        }
-
-        public void setSifra(String sifra) {
-            this.sifra = sifra;
-        }
-
-        public LocalDate getDatumRodjenja() {
-            return datumRodjenja;
-        }
-
-        public void setDatumRodjenja(LocalDate datumRodjenja) {
-            this.datumRodjenja = datumRodjenja;
-        }
-
-        public String getProfilnaSlikaPutanja() {
-            return profilnaSlikaPutanja;
-        }
-
-        public void setProfilnaSlikaPutanja(String profilnaSlikaPutanja) {
-            this.profilnaSlikaPutanja = profilnaSlikaPutanja;
-        }
-
-        public Role getRole() {
-            return role;
-        }
-
-        public void setRole(Role role) {
-            this.role = role;
-        }
-
-        public LocalDateTime getDatumRegistracije() {
-            return DatumRegistracije;
-        }
-
-        public void setDatumRegistracije(LocalDateTime datumRegistracije) {
-            DatumRegistracije = datumRegistracije;
-        }
-
-        public boolean isBlokiran() {
-            return blokiran;
-        }
-
-        public void setBlokiran(boolean blokiran) {
-            this.blokiran = blokiran;
-        }
+    public Igra(String imeIgre, String opisIgre, String igraURL, String thumbnailPutanja, Kategorija kategorija, LocalDateTime datumDodavanja, boolean aktivna) {
+        this.imeIgre = imeIgre;
+        this.opisIgre = opisIgre;
+        this.igraURL = igraURL;
+        this.thumbnailPutanja = thumbnailPutanja;
+        this.kategorija = kategorija;
+        this.datumDodavanja = datumDodavanja;
+        this.aktivna = aktivna;
     }
+
+    public Long getIdIgre() {
+        return idIgre;
+    }
+
+    public void setIdIgre(Long idIgre) {
+        this.idIgre = idIgre;
+    }
+
+    public String getImeIgre() {
+        return imeIgre;
+    }
+
+    public void setImeIgre(String imeIgre) {
+        this.imeIgre = imeIgre;
+    }
+
+    public String getOpisIgre() {
+        return opisIgre;
+    }
+
+    public void setOpisIgre(String opisIgre) {
+        this.opisIgre = opisIgre;
+    }
+
+    public String getIgraURL() {
+        return igraURL;
+    }
+
+    public void setIgraURL(String igraURL) {
+        this.igraURL = igraURL;
+    }
+
+    public String getThumbnailPutanja() {
+        return thumbnailPutanja;
+    }
+
+    public void setThumbnailPutanja(String thumbnailPutanja) {
+        this.thumbnailPutanja = thumbnailPutanja;
+    }
+
+    public Kategorija getKategorija() {
+        return kategorija;
+    }
+
+    public void setKategorija(Kategorija kategorija) {
+        this.kategorija = kategorija;
+    }
+
+    public boolean isAktivna() {
+        return aktivna;
+    }
+
+    public void setAktivna(boolean aktivna) {
+        this.aktivna = aktivna;
+    }
+
+    public LocalDateTime getDatumDodavanja() {
+        return datumDodavanja;
+    }
+
+    public void setDatumDodavanja(LocalDateTime datumDodavanja) {
+        this.datumDodavanja = datumDodavanja;
+    }
+}
