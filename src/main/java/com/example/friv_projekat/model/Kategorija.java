@@ -2,8 +2,6 @@ package com.example.friv_projekat.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "kategorije")
 public class Kategorija {
@@ -15,9 +13,6 @@ public class Kategorija {
     private String ime;
 
     private String opis;
-
-    @OneToMany(mappedBy = "kategorija", fetch = FetchType.LAZY)
-    private List<Igra> igrice;
 
     public Kategorija(){}
 
@@ -50,11 +45,4 @@ public class Kategorija {
         this.opis = opis;
     }
 
-    public List<Igra> getIgrice() {
-        return igrice;
-    }
-
-    public void setIgrice(List<Igra> igrice) {
-        this.igrice = igrice;
-    }
 }

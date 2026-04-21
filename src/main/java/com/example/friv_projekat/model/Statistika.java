@@ -1,7 +1,6 @@
 package com.example.friv_projekat.model;
 
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
@@ -21,17 +20,23 @@ public class Statistika {
     private Igra igra;
 
     @Column(nullable = false)
-    private LocalDateTime pocetnoVreme;
+    private LocalDateTime pocetnoVreme = LocalDateTime.now();
 
     private LocalDateTime krajnjeVreme;
 
     public Statistika() {}
 
-    public Statistika(Korisnik korisnik, LocalDateTime pocetnoVreme, Igra igra, LocalDateTime krajnjeVreme) {
+    public Statistika(Korisnik korisnik, Igra igra) {
         this.korisnik = korisnik;
-        this.pocetnoVreme = pocetnoVreme;
         this.igra = igra;
-        this.krajnjeVreme = krajnjeVreme;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Korisnik getKorisnik() {
@@ -65,4 +70,12 @@ public class Statistika {
     public void setKrajnjeVreme(LocalDateTime krajnjeVreme) {
         this.krajnjeVreme = krajnjeVreme;
     }
+
+    public long getTrajanjeUSekundama() {
+        if (pocetnoVreme == null || krajnjeVreme == null) {
+            return 0;
+        }
+        return java.time.Duration.between(pocetnoVreme, krajnjeVreme).getSeconds();
+    }
+
 }

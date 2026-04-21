@@ -9,71 +9,70 @@ import java.time.LocalDateTime;
 public class Igra {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private Long idIgre;
+    private Long id;
 
     @Column
-    private String imeIgre;
+    private String ime;
 
     @Column(columnDefinition = "TEXT")
-    private String opisIgre;
+    private String opis;
 
     @Column
-    private String igraURL;
+    private String URL;
 
     private String thumbnailPutanja;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "Kategorija_id")
+    @JoinColumn(name = "kategorija_id")
     private Kategorija kategorija;
-
+    
     @Column(nullable = false)
-    private LocalDateTime datumDodavanja;
+    private LocalDateTime datumDodavanja = LocalDateTime.now();
 
     @Column(nullable = false)
     private boolean aktivna = true;
 
     public Igra() {}
 
-    public Igra(String imeIgre, String opisIgre, String igraURL, String thumbnailPutanja, Kategorija kategorija, LocalDateTime datumDodavanja, boolean aktivna) {
-        this.imeIgre = imeIgre;
-        this.opisIgre = opisIgre;
-        this.igraURL = igraURL;
+    public Igra(String ime, String opis, String URL, String thumbnailPutanja, Kategorija kategorija, boolean aktivna) {
+        this.ime = ime;
+        this.opis = opis;
+        this.URL = URL;
         this.thumbnailPutanja = thumbnailPutanja;
         this.kategorija = kategorija;
-        this.datumDodavanja = datumDodavanja;
         this.aktivna = aktivna;
     }
 
-    public Long getIdIgre() {
-        return idIgre;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdIgre(Long idIgre) {
-        this.idIgre = idIgre;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getImeIgre() {
-        return imeIgre;
+    public String getIme() {
+        return ime;
     }
 
-    public void setImeIgre(String imeIgre) {
-        this.imeIgre = imeIgre;
+    public void setIme(String ime) {
+        this.ime = ime;
     }
 
-    public String getOpisIgre() {
-        return opisIgre;
+    public String getOpis() {
+        return opis;
     }
 
-    public void setOpisIgre(String opisIgre) {
-        this.opisIgre = opisIgre;
+    public void setOpis(String opis) {
+        this.opis = opis;
     }
 
-    public String getIgraURL() {
-        return igraURL;
+    public String getURL() {
+        return URL;
     }
 
-    public void setIgraURL(String igraURL) {
-        this.igraURL = igraURL;
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 
     public String getThumbnailPutanja() {

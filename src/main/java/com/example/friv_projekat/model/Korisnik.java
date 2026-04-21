@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
     @Entity
-    @Table(name = "users")
+    @Table(name = "korisnici")
     public class Korisnik {
 
         @Id
@@ -32,10 +32,10 @@ import java.time.LocalDateTime;
         @Column(nullable = false)
         private Role role = Role.USER;
 
-        private String profilnaSlikaPutanja;
+        private String profilnaSlikaPutanja = "default-avatar.png";
 
         @Column(nullable = false)
-        private LocalDateTime DatumRegistracije = LocalDateTime.now();
+        private LocalDateTime datumRegistracije = LocalDateTime.now();
 
         @Column(nullable = false)
         private boolean blokiran = false;
@@ -116,11 +116,11 @@ import java.time.LocalDateTime;
         }
 
         public LocalDateTime getDatumRegistracije() {
-            return DatumRegistracije;
+            return datumRegistracije;
         }
 
         public void setDatumRegistracije(LocalDateTime datumRegistracije) {
-            DatumRegistracije = datumRegistracije;
+            this.datumRegistracije = datumRegistracije;
         }
 
         public boolean isBlokiran() {

@@ -20,22 +20,21 @@ public class Postignuca {
     private Igra igra;
 
     @Column(nullable = false)
-    private String imePostignuca;
+    private String naziv;
 
     @Column(columnDefinition = "TEXT")
-    private String opisPostignuca;
+    private String opis;
 
     @Column(nullable = false)
-    private LocalDateTime ostvarenTada = LocalDateTime.now();
+    private LocalDateTime vremeOstvarenja = LocalDateTime.now();
 
     public Postignuca() {}
 
-    public Postignuca(Korisnik korisnik, Igra igra, String imePostignuca, String opisPostignuca, LocalDateTime ostvarenTada) {
+    public Postignuca(Korisnik korisnik, Igra igra, String naziv, String opis) {
         this.korisnik = korisnik;
         this.igra = igra;
-        this.imePostignuca = imePostignuca;
-        this.opisPostignuca = opisPostignuca;
-        this.ostvarenTada = ostvarenTada;
+        this.naziv = naziv;
+        this.opis = opis;
     }
 
     public Long getId() {
@@ -62,27 +61,27 @@ public class Postignuca {
         this.igra = igra;
     }
 
-    public String getName() {
-        return imePostignuca;
+    public String getNaziv() {
+        return naziv;
     }
 
-    public void setName(String imePostignuca) {
-        this.imePostignuca = imePostignuca;
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
     }
 
-    public String getOpisPostignuca() {
-        return opisPostignuca;
+    public String getOpis() {
+        return opis;
     }
 
-    public void setOpisPostignuca(String opisPostignuca) {
-        this.opisPostignuca = opisPostignuca;
+    public void setOpis(String opis) {
+        this.opis = opis;
     }
 
-    public LocalDateTime getOstvarenTada() {
-        return ostvarenTada;
+    public LocalDateTime getVremeOstvarenja() {
+        return vremeOstvarenja;
     }
 
-    public void setOstvarenTada(LocalDateTime ostvarenTada) {
-        this.ostvarenTada = ostvarenTada;
+    public void setVremeOstvarenja(LocalDateTime vremeOstvarenja) {
+        this.vremeOstvarenja = vremeOstvarenja;
     }
 }
