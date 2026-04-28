@@ -12,6 +12,7 @@ public class Kategorija {
     @Column(nullable = false,unique = true)
     private String ime;
 
+    @Column(columnDefinition = "TEXT")
     private String opis;
 
     public Kategorija(){}

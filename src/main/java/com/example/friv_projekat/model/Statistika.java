@@ -22,6 +22,7 @@ public class Statistika {
     @Column(nullable = false)
     private LocalDateTime pocetnoVreme = LocalDateTime.now();
 
+    @Column
     private LocalDateTime krajnjeVreme;
 
     public Statistika() {}
@@ -71,6 +72,7 @@ public class Statistika {
         this.krajnjeVreme = krajnjeVreme;
     }
 
+    @Transient
     public long getTrajanjeUSekundama() {
         if (pocetnoVreme == null || krajnjeVreme == null) {
             return 0;
