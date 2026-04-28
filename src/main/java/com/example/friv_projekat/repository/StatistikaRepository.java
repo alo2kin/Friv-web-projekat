@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,4 +32,34 @@ public interface StatistikaRepository extends JpaRepository<Statistika, Long> {
             "WHERE s.korisnik.id = :korisnikId " +
             "GROUP BY s.igra.kategorija.ime")
     List<Object[]> sumVremePoKategorijama(@Param("korisnikId") Long korisnikId);
+
+    // 3.5 monitoring
+    // sve sesije igranja
+    List<Statistika> findAllByOrderByPocetnoVremeDesc();
+
+    // najigranije igrice u sistemu
+    @Query("SELECT s.igra, SUM(s.trajanjeUSekundama) as ukupno FROM Statistika s " +
+            "GROUP BY s.igra ORDER BY ukupno DESC")
+    List<Object[]> findNajigranijeIgriceUSistemu();
+
+    // Statistika igranja po igrama
+    @Query("SELECT s.igra, SUM(s.trajanjeUSekundama) FROM Statistika s " +
+            "GROUP BY s.igra")
+    List<Object[]> findStatistikaPoIgrama();
+
+    // 3.6 Dashboard
+    // Najigranije igrice u poslednjih 30 dana
+    @Query("SELECT s.igra, SUM(s.trajanjeUSekundama) as ukupno FROM Statistika s " +
+            "WHERE s.pocetnoVreme > :preMesecDana " +
+            "GROUP BY s.igra ORDER BY ukupno DESC")
+    List<Object[]> findNajigranijeUPoslednjih30Dana(@Param("preMesecDana") LocalDateTime preMesecDana);
+
+    // najaktivniji korisnici
+    @Query("SELECT s.korisnik, SUM(s.trajanjeUSekundama) as ukupno FROM Statistika s " +
+            "GROUP BY s.korisnik ORDER BY ukupno DESC")
+    List<Object[]> findNajaktivnijiKorisnici();
+
+    // Broj aktivnih korisnika (aktivnost u poslednjih 30 dana)
+    @Query("SELECT COUNT(DISTINCT s.korisnik) FROM Statistika s WHERE s.pocetnoVreme > :preMesecDana")
+    long countAktivniKorisniciUPoslednjih30Dana(@Param("preMesecDana") LocalDateTime preMesecDana);
 }

@@ -15,4 +15,7 @@ public interface IgraRepository extends JpaRepository<Igra, Long> {
     @Query("SELECT i FROM Igra i LEFT JOIN Recenzija r ON r.igra.id = i.id " +
             "GROUP BY i.id ORDER BY AVG(r.ocena) DESC")
     List<Igra> findAllOrderByProsecnaOcenaDesc();
+
+    // provera da li igra vec postoji u bazi prilikom automatskog unoosenja
+    boolean existsByIme(String ime);
 }
