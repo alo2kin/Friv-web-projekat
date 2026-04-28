@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PostignuceRepository extends JpaRepository<Postignuce, Long> {
-    List<Postignuce> findByKorisnikId(Long korisnikId);
+    List<Postignuce> findByKorisnikId(Long korisnikId); // lista postignuca korisniku
 }

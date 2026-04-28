@@ -25,6 +25,9 @@ public class Statistika {
     @Column
     private LocalDateTime krajnjeVreme;
 
+    @Column
+    private Long trajanjeUSekundama;
+
     public Statistika() {}
 
     public Statistika(Korisnik korisnik, Igra igra) {
@@ -70,9 +73,9 @@ public class Statistika {
 
     public void setKrajnjeVreme(LocalDateTime krajnjeVreme) {
         this.krajnjeVreme = krajnjeVreme;
+        setTrajanjeUSekundama(getTrajanjeUSekundama());
     }
 
-    @Transient
     public long getTrajanjeUSekundama() {
         if (pocetnoVreme == null || krajnjeVreme == null) {
             return 0;
@@ -80,4 +83,7 @@ public class Statistika {
         return java.time.Duration.between(pocetnoVreme, krajnjeVreme).getSeconds();
     }
 
+    public void setTrajanjeUSekundama(Long trajanjeUSekundama) {
+        this.trajanjeUSekundama = trajanjeUSekundama;
+    }
 }
