@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
     @Entity
     @Table(name = "korisnici")
     public class Korisnik {
-
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
@@ -32,6 +31,7 @@ import java.time.LocalDateTime;
         @Column(nullable = false)
         private Role role = Role.USER;
 
+        @Column
         private String profilnaSlikaPutanja = "default-avatar.png";
 
         @Column(nullable = false)

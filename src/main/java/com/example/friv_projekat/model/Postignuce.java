@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "postignuca")
-public class Postignuca {
+public class Postignuce {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,9 +28,9 @@ public class Postignuca {
     @Column(nullable = false)
     private LocalDateTime vremeOstvarenja = LocalDateTime.now();
 
-    public Postignuca() {}
+    public Postignuce() {}
 
-    public Postignuca(Korisnik korisnik, Igra igra, String naziv, String opis) {
+    public Postignuce(Korisnik korisnik, Igra igra, String naziv, String opis) {
         this.korisnik = korisnik;
         this.igra = igra;
         this.naziv = naziv;

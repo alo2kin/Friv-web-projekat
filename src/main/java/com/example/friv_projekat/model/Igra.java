@@ -11,15 +11,16 @@ public class Igra {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String ime;
 
     @Column(columnDefinition = "TEXT")
     private String opis;
 
-    @Column
+    @Column(nullable = false)
     private String URL;
 
+    @Column
     private String thumbnailPutanja;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -31,6 +32,9 @@ public class Igra {
 
     @Column(nullable = false)
     private boolean aktivna = true;
+
+    @Transient
+    private Double prosecnaOcena;
 
     public Igra() {}
 
@@ -105,5 +109,13 @@ public class Igra {
 
     public void setDatumDodavanja(LocalDateTime datumDodavanja) {
         this.datumDodavanja = datumDodavanja;
+    }
+
+    public Double getProsecnaOcena() {
+        return prosecnaOcena;
+    }
+
+    public void setProsecnaOcena(Double prosecnaOcena) {
+        this.prosecnaOcena = prosecnaOcena;
     }
 }
