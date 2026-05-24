@@ -33,18 +33,17 @@ public class Igra {
     @Column(nullable = false)
     private boolean aktivna = true;
 
-    @Transient
+    @Column
     private Double prosecnaOcena;
 
     public Igra() {}
 
-    public Igra(String ime, String opis, String URL, String thumbnailPutanja, Kategorija kategorija, boolean aktivna) {
+    public Igra(String ime, String opis, String URL, String thumbnailPutanja, Kategorija kategorija) {
         this.ime = ime;
         this.opis = opis;
         this.URL = URL;
         this.thumbnailPutanja = thumbnailPutanja;
         this.kategorija = kategorija;
-        this.aktivna = aktivna;
     }
 
     public Long getId() {
