@@ -73,14 +73,18 @@ public class Statistika {
 
     public void setKrajnjeVreme(LocalDateTime krajnjeVreme) {
         this.krajnjeVreme = krajnjeVreme;
-        setTrajanjeUSekundama((int) getTrajanjeUSekundama());
+        setTrajanjeUSekundama(izracunajTrajanjeUSekundama());
     }
 
-    public long getTrajanjeUSekundama() {
+    public Integer getTrajanjeUSekundama() {
+        return trajanjeUSekundama;
+    }
+
+    public Integer izracunajTrajanjeUSekundama() {
         if (pocetnoVreme == null || krajnjeVreme == null) {
             return 0;
         }
-        return java.time.Duration.between(pocetnoVreme, krajnjeVreme).getSeconds();
+        return (int) java.time.Duration.between(pocetnoVreme, krajnjeVreme).getSeconds();
     }
 
     public void setTrajanjeUSekundama(Integer trajanjeUSekundama) {

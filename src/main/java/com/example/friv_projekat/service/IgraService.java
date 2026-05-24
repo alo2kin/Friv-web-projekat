@@ -100,4 +100,9 @@ public class IgraService {
 
         return IgraAdminDTO.konvertujUAdminDTO(igra);
     }
+
+    //3.6 Ukupan broj igrica
+    public long getUkupanBrojSvihIgara() {
+        return igraRepository.count();
+    }
 }

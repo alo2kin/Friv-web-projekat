@@ -124,7 +124,11 @@ public interface StatistikaRepository extends JpaRepository<Statistika, Long> {
     @Query("""
         SELECT COUNT(DISTINCT s.korisnik.id)
         FROM Statistika s
-        WHERE s.pocetnoVreme >= :datum
+        WHERE s.pocetnoVreme >= :pre30Dana
     """)
-    long countAktivniKorisniciUPoslednjih30Dana(@Param("datum") LocalDateTime datum);
+    long countAktivniKorisniciUPoslednjih30Dana(@Param("pre30Dana") LocalDateTime datum);
+
+    // 3.3 Upravljanje korisnicima
+    //pregledati statistiku igranja korisnika
+    Page<Statistika> findByKorisnikIdOrderByPocetnoVremeDesc(Long korisnikId, Pageable pageable);
 }
