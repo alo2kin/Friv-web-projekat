@@ -1,5 +1,8 @@
 package com.example.friv_projekat.repository;
 
+import com.example.friv_projekat.dto.IgraStatistikaDTO;
+import com.example.friv_projekat.dto.KategorijaStatistikaDTO;
+import com.example.friv_projekat.dto.KorisnikStatistikaDTO;
 import com.example.friv_projekat.model.Statistika;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,13 +34,15 @@ public interface StatistikaRepository extends JpaRepository<Statistika, Long> {
 
     // najigranije igrice
     @Query("""
-        SELECT s.igra, COALESCE(SUM(s.trajanjeUSekundama), 0)
+        SELECT new com.example.friv_projekat.dto.IgraStatistikaDTO(
+            s.igra, COALESCE(SUM(s.trajanjeUSekundama), 0)
+        )
         FROM Statistika s
         WHERE s.korisnik.id = :korisnikId
         GROUP BY s.igra
         ORDER BY SUM(s.trajanjeUSekundama) DESC
     """)
-    Page<Object[]> findNajigranijeIgriceKorisnika(
+    Page<IgraStatistikaDTO> findNajigranijeIgriceKorisnika(
             @Param("korisnikId") Long korisnikId,
             Pageable pageable
     );
@@ -45,16 +50,18 @@ public interface StatistikaRepository extends JpaRepository<Statistika, Long> {
     // broj pokretanja igrice za jednog korisnika
     long countByKorisnikId(Long korisnikId);
 
-    // ukupno igranje po kategorijama, vraca listu nizova [ime kategorije, sumirano vreme]
+    // ukupno igranje po kategorijama, vraca page dto[ime kategorije, sumirano vreme]
     @Query("""
-        SELECT s.igra.kategorija.ime,
-               COALESCE(SUM(s.trajanjeUSekundama), 0)
+        SELECT new com.example.friv_projekat.dto.KategorijaStatistikaDTO(
+            s.igra.kategorija.ime,
+            COALESCE(SUM(s.trajanjeUSekundama), 0)
+        )
         FROM Statistika s
         WHERE s.korisnik.id = :korisnikId
         GROUP BY s.igra.kategorija.ime
         ORDER BY SUM(s.trajanjeUSekundama) DESC
     """)
-    Page<Object[]> findVremePoKategorijama(
+    Page<KategorijaStatistikaDTO> findVremePoKategorijama(
             @Param("korisnikId") Long korisnikId,
             Pageable pageable
     );
@@ -65,48 +72,53 @@ public interface StatistikaRepository extends JpaRepository<Statistika, Long> {
 
     // najigranije igrice u sistemu
     @Query("""
-        SELECT s.igra,
-               COALESCE(SUM(s.trajanjeUSekundama), 0)
+        SELECT new com.example.friv_projekat.dto.IgraStatistikaDTO(
+            s.igra, COALESCE(SUM(s.trajanjeUSekundama), 0)
+        )
         FROM Statistika s
         GROUP BY s.igra
         ORDER BY SUM(s.trajanjeUSekundama) DESC
     """)
-    Page<Object[]> findNajigranijeIgriceUSistemu(Pageable pageable);
+    Page<IgraStatistikaDTO> findNajigranijeIgriceUSistemu(Pageable pageable);
 
     // Statistika igranja po igrama
     @Query("""
-        SELECT s.igra,
-               COALESCE(SUM(s.trajanjeUSekundama), 0)
+        SELECT new com.example.friv_projekat.dto.IgraStatistikaDTO(
+            s.igra, COALESCE(SUM(s.trajanjeUSekundama), 0)
+        )
         FROM Statistika s
         GROUP BY s.igra
         ORDER BY SUM(s.trajanjeUSekundama) DESC
     """)
-    Page<Object[]> findStatistikaPoIgrama(Pageable pageable);
+    Page<IgraStatistikaDTO> findStatistikaPoIgrama(Pageable pageable);
 
     // 3.6 Dashboard
     // Najigranije igrice u poslednjih 30 dana
     @Query("""
-        SELECT s.igra,
-               COALESCE(SUM(s.trajanjeUSekundama), 0)
+        SELECT new com.example.friv_projekat.dto.IgraStatistikaDTO(
+            s.igra, COALESCE(SUM(s.trajanjeUSekundama), 0)
+        )
         FROM Statistika s
         WHERE s.pocetnoVreme >= :datum
         GROUP BY s.igra
         ORDER BY SUM(s.trajanjeUSekundama) DESC
     """)
-    Page<Object[]> findNajigranijeUPoslednjih30Dana(
+    Page<IgraStatistikaDTO> findNajigranijeUPoslednjih30Dana(
             @Param("datum") LocalDateTime datum,
             Pageable pageable
     );
 
     // najaktivniji korisnici
     @Query("""
-        SELECT s.korisnik,
-               COALESCE(SUM(s.trajanjeUSekundama), 0)
+        SELECT new com.example.friv_projekat.dto.KorisnikStatistikaDTO(
+            s.korisnik,
+            COALESCE(SUM(s.trajanjeUSekundama), 0)
+        )
         FROM Statistika s
         GROUP BY s.korisnik
         ORDER BY SUM(s.trajanjeUSekundama) DESC
     """)
-    Page<Object[]> findNajaktivnijiKorisnici(Pageable pageable);
+    Page<KorisnikStatistikaDTO> findNajaktivnijiKorisnici(Pageable pageable);
 
     // Broj aktivnih korisnika (aktivnost u poslednjih 30 dana)
     @Query("""

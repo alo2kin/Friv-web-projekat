@@ -1,8 +1,9 @@
 package com.example.friv_projekat.dto;
 
+import com.example.friv_projekat.model.Korisnik;
+
 public record KorisnikStatistikaDTO(
-        Long korisnikId,
-        String korisnickoIme,
-        Long ukupnoVreme
+        Korisnik korisnik,
+        Integer ukupnoSekundi
 ) {
 }
