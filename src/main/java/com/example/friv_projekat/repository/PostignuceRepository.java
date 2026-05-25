@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface PostignuceRepository extends JpaRepository<Postignuce, Long> {
     List<Postignuce> findByKorisnikId(Long korisnikId); // lista postignuca korisniku
+
+    boolean existsByKorisnikIdAndIgraIdAndNaziv(Long korisnikId, Long igraId, String naziv);
 }

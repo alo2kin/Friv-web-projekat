@@ -44,8 +44,10 @@ public class IgraService {
                 .map(IgraPregledDTO::konvertujUPregledDTO);
     }
 
+    // sortiranje igara po prosecnim ocenama
+    // u controller @PageableDefault(size = 10, sort = "prosecnaOcena", direction = Sort.Direction.DESC) Pageable pageable
     public Page<IgraPregledDTO> sortiraneIgrePoOcenama(Pageable pageable) {
-        return igraRepository.findAllOrderByProsecnaOcenaDesc(pageable)
+        return igraRepository.findByAktivnaTrue(pageable)
                 .map(IgraPregledDTO::konvertujUPregledDTO);
     }
 
