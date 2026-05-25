@@ -26,8 +26,10 @@ public class StatistikaService {
     }
 
     public Long ukupnoVremeIgranjaZaKorisnika(Long korisnikId) {
-        Long ukupnoVreme = statistikaRepository.sumTrajanjeUSekundamaByKorisnikId(korisnikId);
-        return ukupnoVreme != null ? ukupnoVreme: 0L;
+        return statistikaRepository.findByKorisnikId(korisnikId)
+                .stream()
+                .mapToLong(s -> s.getTrajanjeUSekundama() != null ? s.getTrajanjeUSekundama() : 0)
+                .sum();
     }
 
     public Page<StatistikaIgreDTO> najigranijeIgriceZaKorisnika(Long korisnikId, Pageable pageable) {
