@@ -26,19 +26,22 @@ public class StatistikaService {
     }
 
     public Long ukupnoVremeIgranjaZaKorisnika(Long korisnikId) {
-        return statistikaRepository.sumUkupnoVremeIgranja(korisnikId);
+        Long ukupnoVreme = statistikaRepository.sumTrajanjeUSekundamaByKorisnikId(korisnikId);
+        return ukupnoVreme != null ? ukupnoVreme: 0L;
     }
 
-    public Page<IgraStatistikaDTO> najigranijeIgriceZaKorisnika(Long korisnikId, Pageable pageable) {
-         return statistikaRepository.findNajigranijeIgriceKorisnika(korisnikId, pageable);
+    public Page<StatistikaIgreDTO> najigranijeIgriceZaKorisnika(Long korisnikId, Pageable pageable) {
+         return statistikaRepository.findNajigranijeIgriceKorisnika(korisnikId, pageable)
+                 .map(StatistikaIgreDTO::konvertuj);
     }
 
     public long brojPokretanjaIgriZaKorisnika(Long korisnikId) {
         return statistikaRepository.countByKorisnikId(korisnikId);
     }
 
-    public Page<KategorijaStatistikaDTO> ukupnoVremeIgranjaPoKategorijamaZaKorisnika(Long id, Pageable pageable) {
-        return statistikaRepository.findVremePoKategorijama(id, pageable);
+    public Page<StatistikaKategorijeDTO> ukupnoVremeIgranjaPoKategorijamaZaKorisnika(Long id, Pageable pageable) {
+        return statistikaRepository.findVremePoKategorijama(id, pageable)
+                .map(StatistikaKategorijeDTO::konvertuj);
     }
 
     // 3.3 Upravljanje korisnicima
@@ -52,36 +55,32 @@ public class StatistikaService {
     //3.5. Monitoring
     // Sve sesije igranja
     public Page<StatistikaDTO> getSveSesijeIgranja(Pageable pageable) {
-        return statistikaRepository.findAllByOrderByPocetnoVremeDesc(pageable)
+        return statistikaRepository.findAllUcitajSveSesije(pageable)
                 .map(StatistikaDTO::konvertuj);
     }
 
-
     // Statistiku igranja po igrama
-    public Page<IgraStatistikaDTO> getStatistikaPoIgrama(Pageable pageable) {
-        return statistikaRepository.findStatistikaPoIgrama(pageable);
+    public Page<StatistikaIgreDTO> getStatistikaPoIgrama(Pageable pageable) {
+        return statistikaRepository.findStatistikaPoIgrama(pageable)
+                .map(StatistikaIgreDTO::konvertuj);
     }
-
-
-    // Najigranije igrice u sistemu
-    public Page<IgraStatistikaDTO> getNajigranijeIgriceUSistemu(Pageable pageable) {
-        return statistikaRepository.findNajigranijeIgriceUSistemu(pageable);
-    }
-
 
     //3.6. Dashboard
     // Broj aktivnih korisnika (aktivnost u poslednjih 30 dana)
     public long getBrojAktivnihUPoslesnjih30Dana() {
-        return statistikaRepository.countAktivniKorisniciUPoslednjih30Dana(LocalDateTime.now().minusDays(30));
+        return statistikaRepository
+                .countDistinctKorisnikIdByPocetnoVremeGreaterThanEqual(LocalDateTime.now().minusDays(30));
     }
 
     // Najigranije igrice u poslednjih 30 dana
-    public Page<IgraStatistikaDTO> getNajigranijeIgreUPoslednjih30Dana(Pageable pageable) {
-        return statistikaRepository.findNajigranijeUPoslednjih30Dana(LocalDateTime.now().minusDays(30), pageable);
+    public Page<StatistikaIgreDTO> getNajigranijeIgreUPoslednjih30Dana(Pageable pageable) {
+        return statistikaRepository.findNajigranijeUPoslednjih30Dana(LocalDateTime.now().minusDays(30), pageable)
+                .map(StatistikaIgreDTO::konvertuj);
     }
 
     // Najaktivnije korisnike
-    public Page<KorisnikStatistikaDTO> getNajaktivnijiKorisnici(Pageable pageable) {
-        return statistikaRepository.findNajaktivnijiKorisnici(pageable);
+    public Page<KorisnikVremeDTO> getNajaktivnijiKorisnici(Pageable pageable) {
+        return statistikaRepository.findNajaktivnijiKorisnici(pageable)
+                .map(KorisnikVremeDTO::konvertuj);
     }
 }
